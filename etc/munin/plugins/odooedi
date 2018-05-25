@@ -1,6 +1,10 @@
 #!/bin/sh
 #%# family=manual
 #%# capabilities=autoconf suggest
+# 
+# [odooedi]
+# env.DATABASE  [databasename]
+#
 case $1 in
   config)
       echo graph_category odoo
@@ -15,7 +19,7 @@ case $1 in
 esac
 
 echo -n "late.value "
-psql -A -t -d odoo1 -c "
+psql -A -t -d $DATABASE -c "
   select count(*) from account_invoice
   inner join res_partner on account_invoice.partner_id=res_partner.id 
   where state in ('open','paid')
